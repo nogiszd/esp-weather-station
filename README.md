@@ -29,7 +29,7 @@ Update on screen and MQTT broker happens in 2 second manner, which is configurab
 
 All peripherals share a single I2C bus. The **ESP8266** controller exposes only one hardware I2C controller, but since each device uses a distinct address, all three can be wired to the same SDA/SCL lines without any conflict.
 
-> **Note**: The hardware listed above reflects my own build. It is not a strict requirement, and can be changed (e.g. separate sensors instead of combo module).
+> **Note**: The hardware listed above reflects my own build. It is not a strict requirement, and can be changed (e.g. separate sensors instead of combo module, different MCU).
 
 ## 🔌 Wiring
 
@@ -46,7 +46,7 @@ All peripherals share a single I2C bus. The **ESP8266** controller exposes only 
 
 NodeMCU v3 exposes few 3V3 and GND pins, so there is no need to connect in them serial.
 
-### I2C Addresses
+### 📍 I2C Addresses
 
 | Device      | Address (`hex`) | Notes                                           |
 | ----------- | --------------- | ----------------------------------------------- |
@@ -74,7 +74,8 @@ Before flashing, set desired values in `include/config.h`:
 #define APP_LANGUAGE "en" // "en" or "pl"
 ```
 
-Current config contains default values, so change them as you wish. You can disable publication of readouts via MQTT using `ENABLE_MQTT` flag.
+Current config contains default values, so change them as you wish.  
+You can disable publication of readouts via MQTT using `ENABLE_MQTT` flag.
 
 ## 🚀 Build and flash
 
