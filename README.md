@@ -8,7 +8,7 @@ The output is rendered on small OLED screen, and optionally published to an MQTT
 
 Update on screen and MQTT broker happens in 2 second manner, which is configurable in `config.h` file.
 
-> **Note**: The same should code work for ESP32 boards, with minor tweaks (change of used library for Wi-Fi) and changes in pinout. Moreover, ESP32 exposes more I2C lines, making the wiring easier, without need to parallelize.
+> **Note**: The same code should work for ESP32 boards, with minor tweaks (change of used library for Wi-Fi) and changes in pinout. Moreover, ESP32 exposes more I2C lines, making the wiring easier, without need to parallelize.
 
 ## ✨ Features
 
