@@ -4,7 +4,7 @@
 
 This project allows to use NodeMCU v3 board to create a simple weather station, which reads temperature, humidity, and atmospheric pressure from two I2C sensors.
 
-The output is rendered on small OLED screen, and optionally publishes them to an MQTT broker. This can be useful for integration with home automation systems, dashboards, or logging tools.
+The output is rendered on small OLED screen, and optionally published to an MQTT broker. This can be useful for integration with home automation systems, dashboards, or logging tools.
 
 Update on screen and MQTT broker happens in 2 second manner, which is configurable in `config.h` file.
 
@@ -14,26 +14,28 @@ Same code works for ESP32 boards, with minor tweaks and changes in pinout. ESP32
 
 - Temperature and humidity readings via **AHT20** sensor,
 - Atmospheric pressure readings via **BMP280** sensor,
-- Live outputon **SSD1306** OLED display (128x64 resolution),
-- Multi-language display support (currently: English/Polish),
-- Ability to publish sensor data over MQTT on local network.
+- Live output on **SSD1306** OLED display (128x64 resolution),
+- Multi-language display UI support (currently: English/Polish),
+- Ability to publish current sensor data over MQTT on local network.
 
-## 🛠️ Hardware
+## 🛠️ Used hardware
 
-| Component                   | Model                               |
-| --------------------------- | ----------------------------------- |
-| Microcontroller             | **NodeMCU v3** (ESP8266, CP2106)    |
-| Temperature/humidity sensor | **AHT20**                           |
-| Pressure sensor             | **BMP280**                          |
-| Display                     | **SSD1306** OLED, 128x64 white, I2C |
+| Component                   | Model                                |
+| --------------------------- | ------------------------------------ |
+| Microcontroller             | **NodeMCU v3** (ESP8266, CP2106)     |
+| Temperature/humidity sensor | **AHT20**                            |
+| Pressure sensor             | **BMP280**                           |
+| Display                     | **SSD1306** OLED, 128x64, white, I2C |
 
 All peripherals share a single I2C bus. The **ESP8266** controller exposes only one hardware I2C controller, but since each device uses a distinct address, all three can be wired to the same SDA/SCL lines without any conflict.
+
+> **Note**: The hardware listed above reflects my own build. It is not a strict requirement, and can be changed (e.g. separate sensors instead of combo module).
 
 ## 🔌 Wiring
 
 ![Wiring diagram](docs/circuit_proto.png)
 
-> Diagram shows bundle combining AHT20/BMP280 modules together, sharing a single SDA/SCL line.
+> **Note**: Diagram shows a module that combines AHT20/BMP280 sensors together, sharing a single SDA/SCL line.
 
 | Signal | NodeMCU Pin | Color on diagram |
 | ------ | ----------- | ---------------- |
@@ -83,6 +85,23 @@ pio run -t upload
 pio device monitor
 ```
 
+### 🐛 Debugging
+
+If everything was configured correctly, board after boot will immediately start to send messages via serial port.  
+You can read them to monitor and troubleshoot, for e.g. connection to Wi-Fi, connection to MQTT broker, etc.
+
+Default project's set baud rate is `74880`, which can be changed in `platformio.ini` and inside `main.cpp`'s `init()` function.
+
+To connect the serial monitor, you can use one of ways briefly described below:
+
+1. **Via terminal**
+   ```bash
+   pio device list
+   pio device monitor --port PORT --baud 74880
+   ```
+2. **VS Code extension** - `"F1 > PlatformIO: Serial Monitor"`
+3. **Connect via [putty](https://putty.org/index.html)** or other serial monitor software.
+
 ## 📁 Project structure:
 
 ```
@@ -118,6 +137,8 @@ Readings can be inspected using [MQTT Explorer](https://mqtt-explorer.com/) or f
 ```bash
 mosquitto_sub -h 192.168.x.x -t "home/station/#" -v
 ```
+
+Current implementation publishes the data only if snapshot from last readout changed, this way eliminating redundant messages on topics.
 
 ## 📜 License
 
