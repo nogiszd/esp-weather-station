@@ -8,7 +8,8 @@ The output is rendered on small OLED screen, and optionally published to an MQTT
 
 Update on screen and MQTT broker happens in 2 second manner, which is configurable in `config.h` file.
 
-> **Note**: The same code should work for ESP32 boards, with minor tweaks (change of used library for Wi-Fi) and changes in pinout. Moreover, ESP32 exposes more I2C lines, making the wiring easier, without need to parallelize.
+> [!NOTE]
+> The same code should work for ESP32 boards, with minor tweaks (change of used library for Wi-Fi) and changes in pinout. Moreover, ESP32 exposes more I2C lines, making the wiring easier, without need to parallelize.
 
 ## ✨ Features
 
@@ -29,13 +30,15 @@ Update on screen and MQTT broker happens in 2 second manner, which is configurab
 
 All peripherals share a single I2C bus. The **ESP8266** controller exposes only one hardware I2C controller, but since each device uses a distinct address, all three can be wired to the same SDA/SCL lines without any conflict.
 
-> **Note**: The hardware listed above reflects my own build. It is not a strict requirement, and can be changed (e.g. separate sensors instead of combo module, different MCU).
+> [!NOTE]
+> The hardware listed above reflects my own build. It is not a strict requirement, and can be changed (e.g. separate sensors instead of combo module, different MCU).
 
 ## 🔌 Wiring
 
 ![Wiring diagram](docs/circuit_proto.png)
 
-> **Note**: Diagram shows a module that combines AHT20/BMP280 sensors together, sharing a single SDA/SCL line.
+> [!NOTE]
+> Diagram shows a module that combines AHT20/BMP280 sensors together, sharing a single SDA/SCL line.
 
 | Signal | NodeMCU Pin | Color on diagram |
 | ------ | ----------- | ---------------- |
